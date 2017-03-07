@@ -36,23 +36,29 @@ class LoginLogoutTest(unittest.TestCase):
 
     def test_user_login_success(self):
         """已注册的手机号密码登录成功"""
+
+        # s = requests.session()
         dataload = {'cellphone': 18601750451, 'password': '750451'}
+        # r = s.post(self.login_url, data=dataload, headers=self.headers)
         r = requests.post(self.login_url, data=dataload, headers=self.headers)
         result = r.json()
         result_uni = unicode(result)
         print(result_uni)
         self.assertEqual(result['code'], 0)
         self.assertIsNotNone(result['result']['token'])
+        if result['result']['token']:
+            self.__class__.token = result['result']['token']
 
-    def test_user_logout(self):
-        """登出成功"""
-        print("Logout Token=" + self.token)
-        dataload = {'token': self.token}  # 此处需要session来保存token
-        r = requests.post(self.logout_url, data=dataload, headers=self.headers)
-        result = r.json()
-        print unicode(result)
-        self.assertEqual(result['code'], 0)
-        self.assertEqual(result['result']['token'],self.token)
+    # def test_user_logout(self):
+    #     """登出成功"""
+    #
+    #     print("Logout Token=" + self.__class__.token)
+    #     dataload = {'token': self.__class__.token}
+    #     r = requests.post(self.logout_url, data=dataload, headers=self.headers)
+    #     result = r.json()
+    #     print unicode(result)
+    #     self.assertEqual(result['code'], 0)
+    #     self.assertEqual(result['result']['token'],self.__class__.token)
 
 if __name__ == '__main__':
      unittest.main()
