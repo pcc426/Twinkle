@@ -9,14 +9,14 @@ import json
 
 
 class LoginTest(unittest.TestCase):
-    """ /user/login /user/logout 接口测试 """
+    """ /user/login  接口测试 """
 
     def setUp(self):
         # 在api_tests目录中执行.py时要改路径
         # base_dir = os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         base_dir = os.path.dirname(os.path.abspath("__file__"))
-        # file_path = base_dir + "\api_tests\device.conf"    # windows系统下路径
-        self.file_path = base_dir + "/device.conf"    # mac下路径
+        self.file_path = base_dir + "\device.conf"    # windows系统下路径
+        # self.file_path = base_dir + "/device.conf"    # mac下路径
         print os.path.dirname(os.path.abspath("__file__"))
         print os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         print("file_path=" + self.file_path)
