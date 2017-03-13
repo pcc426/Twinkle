@@ -3,23 +3,22 @@
 import requests
 import unittest
 import os
-import sys
 import ConfigParser
 import json
 
 
 class LoginTest(unittest.TestCase):
-    """ /user/login  接口测试 """
+    """ /user/info interface tests """
 
     def setUp(self):
         # 在api_tests目录中执行.py时要改路径
         # base_dir = os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         base_dir = os.path.dirname(os.path.abspath("__file__"))
-        self.file_path = base_dir + "\device.conf"    # windows系统下路径
-        # self.file_path = base_dir + "/device.conf"    # mac下路径
-        print os.path.dirname(os.path.abspath("__file__"))
-        print os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
-        print("file_path=" + self.file_path)
+        # self.file_path = base_dir + "\device.conf"    # windows系统下路径
+        self.file_path = base_dir + "/device.conf"    # mac下路径
+        # print os.path.dirname(os.path.abspath("__file__"))
+        # print os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
+        # print("file_path=" + self.file_path)
 
         cp = ConfigParser.ConfigParser()
         cp.read(self.file_path)
@@ -41,7 +40,7 @@ class LoginTest(unittest.TestCase):
         self.token = result['token']
 
     def test_user_login_success(self):
-        """ 已注册的手机号密码登录 """
+        """ User Login Via Cellphone/Password """
 
         dataload = {'cellphone': 18601750451, 'password': '750451', 'token': self.token}
         r = requests.post(self.login_url, data=dataload, headers=self.headers)
@@ -56,37 +55,31 @@ class LoginTest(unittest.TestCase):
         cp.write(open(self.file_path, 'w'))
 
 
-class LogoutTest(unittest.TestCase):
-    """ /user/logout 接口测试"""
+class UserInfoTest(unittest.TestCase):
+    """ user/info interface test """
 
     def setUp(self):
         # 在api_tests目录中执行.py时要改路径
         # base_dir = os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         base_dir = os.path.dirname(os.path.abspath("__file__"))
-        # file_path = base_dir + "\api_tests\device.conf"    # windows系统下路径
+        # self.file_path = base_dir + "\device.conf"    # windows系统下路径
         self.file_path = base_dir + "/device.conf"    # mac下路径
-        # print os.path.dirname(os.path.abspath("__file__"))
-        # print os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
-        # print("file_path=" + self.file_path)
 
         cp = ConfigParser.ConfigParser()
         cp.read(self.file_path)
 
         host = cp.get("host_config", "host")
         self.token = cp.get("ios", "token")
-        # self.login_url = "http://" + host + "/user/login"
-        self.logout_url = "http://" + host + "/user/logout"
+        self.url = "http://" + host + "/user/info"
         self.headers = {'Content-Type': "application/x-www-form-urlencoded"}
 
-    def test_user_logout_success(self):
-        """用户注销"""
-
-        dataload = {'token': self.token}
-        r = requests.post(self.logout_url, data=dataload, headers=self.headers)
+    def test_user_info_success(self):
+        r = requests.get(self.url, {'token': self.token})
         result = r.json()
-        print unicode(result)
-        self.assertEqual(result['code'], 20008)    # 用户注销太快易失败?先将校验开启,后续可考虑延迟实现
-        # self.assertEqual(result['result']['token'], self.token)
+        print('USER_INFO_RESP:' + unicode(result))
+        self.assertEqual(result['code'], 0)
+        self.assertIsNotNone(result['data']['uuid'])
+        self.assertIsNotNone(result['data']['is_vip'])
 
 
 if __name__ == '__main__':
