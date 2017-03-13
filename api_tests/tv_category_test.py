@@ -6,6 +6,7 @@ import unittest
 import requests
 import os
 import ConfigParser
+import HtmlTestRunner
 
 
 class TvLiveTest(unittest.TestCase):
