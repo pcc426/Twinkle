@@ -17,9 +17,9 @@ class UpgradeCheckTest(unittest.TestCase):
     def setUp(self):
         base_dir = os.path.dirname(os.path.abspath("__file__"))
         if os.name == 'nt':
-            self.file_path = base_dir + "\device.conf"    # windows系统下路径
+            self.file_path = base_dir + "\config.conf"    # windows系统下路径
         else:
-            self.file_path = base_dir + "/device.conf"    # mac/linux下路径
+            self.file_path = base_dir + "/config.conf"    # mac/linux下路径
         # print os.path.dirname(os.path.abspath("__file__"))
         # print os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         # print("file_path=" + self.file_path)

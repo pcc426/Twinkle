@@ -16,9 +16,9 @@ class LogoutTest(unittest.TestCase):
         # base_dir = os.path.abspath(os.path.join(os.path.dirname("__file__"), os.path.pardir))
         base_dir = os.path.dirname(os.path.abspath("__file__"))
         if os.name == 'nt':
-            self.file_path = base_dir + "\device.conf"    # windows系统下路径
+            self.file_path = base_dir + "\config.conf"    # windows系统下路径
         else:
-            self.file_path = base_dir + "/device.conf"    # mac/linux下路径
+            self.file_path = base_dir + "/config.conf"    # mac/linux下路径
 
         cp = ConfigParser.ConfigParser()
         cp.read(self.file_path)
