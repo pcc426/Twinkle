@@ -9,9 +9,9 @@ import os
 import ConfigParser
 
 
-class IndexV2Test(unittest.TestCase):
+class UpgradeCheckTest(unittest.TestCase):
     """
-    /video/portal_index_v2 API test
+    /upgrade/check API test
     """
 
     def setUp(self):
@@ -28,22 +28,19 @@ class IndexV2Test(unittest.TestCase):
         cp.read(self.file_path)
 
         host = cp.get("host_config", "host")
-        device_info = cp.get("ios", "device_info")
+        # device_info = cp.get("ios", "device_info")
         self.token = cp.get("ios", "token")
-        self.url = "http://" + host + "/video/portal_index_v2?" + device_info
+        self.url = "http://" + host + "/upgrade/check?"
         self.headers = {'Content-Type': 'text/html', 'release': '0', 'channel': 'standard', 'version':
                         cp.get("ios", "version"), 'app': cp.get("ios", "app")}
         self.params = {'token': self.token}
 
-    def test_portal_index_v2_success(self):
+    def test_upgrade_check_success(self):
         r = requests.get(self.url, params=self.params, headers=self.headers)
         result = r.json()
         # print r.url
-        # print('INDEX_V2 RESP:' + unicode(result))
-        self.assertEqual(result['code'], 0)
-        self.assertIsNotNone(result['data'])
-        self.assertNotEqual(result['data']['banner'], [])
-        self.assertNotEqual(result['data']['block'], [])
+        self.assertEqual(result['code'], 20053)
+        self.assertEqual(result['data'], [])
 
 
 if __name__ == '__main__':
