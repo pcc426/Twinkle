@@ -10,9 +10,7 @@ import ConfigParser
 
 
 class IndexV2Test(unittest.TestCase):
-    """
-    /video/portal_index_v2 API test
-    """
+    """/video/portal_index_v2 API test"""
 
     def setUp(self):
         base_dir = os.path.dirname(os.path.abspath("__file__"))

@@ -6,6 +6,7 @@ import sys
 import unittest
 import HTMLTestRunner
 import datetime
+import os
 sys.path.append('./api_tests')
 
 
@@ -17,7 +18,10 @@ if __name__ == '__main__':
     
     # 如果需要html格式输出测试报告,可用下面的html_runner
     str_time = datetime.datetime.now().strftime('%b_%d_%y_%H_%M_%S')
-    fp = file('results/api_test_report_' + str_time + '.html', 'wb')
+    os.mkdir('results/' + str_time+ '/')
+
+    fp = file('results/' + str_time + '/api_test_report_' + str_time + '.html', 'wb')
+    # with open('results/' + str_time + '/api_test_report_' + str_time + '.html', 'wb') as fp:
     runner = HTMLTestRunner.HTMLTestRunner(
         stream=fp,
         title='Api_Test_Report',

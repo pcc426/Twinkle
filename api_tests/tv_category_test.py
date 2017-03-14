@@ -9,9 +9,7 @@ import ConfigParser
 
 
 class TvLiveTest(unittest.TestCase):
-    """
-    /video/tv_category API test
-    """
+    """/video/tv_category API test"""
 
     def setUp(self):
         base_dir = os.path.dirname(os.path.abspath("__file__"))
@@ -48,9 +46,7 @@ class TvLiveTest(unittest.TestCase):
 
 
 class TvListTest(unittest.TestCase):
-    """
-    /video/tv_list API test
-    """
+    """/video/tv_list API test"""
 
     def setUp(self):
         base_dir = os.path.dirname(os.path.abspath("__file__"))
