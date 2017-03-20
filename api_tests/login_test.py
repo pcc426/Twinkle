@@ -43,7 +43,7 @@ class LoginTest(unittest.TestCase):
     def test_user_login_success(self):
         """ User Login Via Cellphone/Password """
 
-        dataload = {'cellphone': 18601750451, 'password': '750451', 'token': self.token}
+        dataload = {'cellphone': 13916171023, 'password': '111111', 'token': self.token}
         r = requests.post(self.login_url, data=dataload, headers=self.headers)
         result = r.json()
         print("LOGIN_RESP:" + unicode(result))
