@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Created by Pcc on 3/13/17
+# Created by Pcc on 3/20/17
+
 
 import unittest
 import requests
@@ -8,8 +9,8 @@ import os
 import ConfigParser
 
 
-class TvCateTest(unittest.TestCase):
-    """/video/tv_category API test"""
+class TvListTest(unittest.TestCase):
+    """/video/tv_list API test"""
 
     cp = ConfigParser.ConfigParser()
 
@@ -27,27 +28,28 @@ class TvCateTest(unittest.TestCase):
         self.cp.read(self.file_path)
 
         host = self.cp.get("host_config", "host")
-        # device_info = self.cp.get("ios", "device_info")
+        # device_info = cp.get("ios", "device_info")
         self.token = self.cp.get("ios", "token")
-        self.url = "http://" + host + "/video/tv_category"
+        self.url = "http://" + host + "/video/tv_list"
         self.headers = {'Content-Type': 'text/html', 'release': '0', 'channel': 'standard', 'version':
                         self.cp.get("ios", "version"), 'app': self.cp.get("ios", "app")}
-        self.params = {'token': self.token, 'app': self.cp.get('ios', 'app')}
+        self.params = {'token': self.token, 'app': self.cp.get('ios', 'app'), 'cid': self.cp.get('tv_program', 'cid')}
 
-    def test_tv_category_success(self):
+    def test_tv_list_success(self):
         r = requests.get(self.url, params=self.params, headers=self.headers)
         result = r.json()
-        cid = result['data'][0]['id']
-        # print r.url
+        tid = result['data']['list'][0]['tid']
+        # print("TID=" + tid)
         # print('INDEX_V2 RESP:' + unicode(result))
         self.assertEqual(result['code'], 0)
-        self.assertNotEqual(result['data'], [])
+        self.assertNotEqual(result['data'], {})
+        self.assertNotEqual(tid, "")
 
-        if cid != "":
-            self.cp.set("tv_program", "cid", value=cid)
+        if tid != "":
+            self.cp.set("tv_program", "tid", value=tid)
             self.cp.write(open(self.file_path, "w"))
         else:
-            print("Cid is null!")
+            print("Tid is null!")
 
 if __name__ == '__main__':
     unittest.main()
