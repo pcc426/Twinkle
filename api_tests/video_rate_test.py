@@ -9,8 +9,8 @@ import os
 import ConfigParser
 
 
-class ProgramDetailTest(unittest.TestCase):
-    """/video/program_detail API test"""
+class VideoRateTest(unittest.TestCase):
+    """/video/video_rate API test"""
 
     cp = ConfigParser.ConfigParser()
 
@@ -27,29 +27,22 @@ class ProgramDetailTest(unittest.TestCase):
         self.cp.read(self.file_path)
 
         host = self.cp.get("host_config", "host")
-        device_info = self.cp.get("ios", "device_info")
+        # device_info = self.cp.get("ios", "device_info")
         self.token = self.cp.get("ios", "token")
-        self.url = "http://" + host + "/video/program_detail?" + device_info
+        self.url = "http://" + host + "/video/video_rate"
         self.headers = {'Content-Type': 'text/html', 'release': '0', 'channel': 'standard', 'version':
                         self.cp.get("ios", "version"), 'app': self.cp.get("ios", "app")}
-        self.params = {'token': self.token, 'vid': self.cp.get('program', 'vid')}
+        self.params = {'token': self.token, 'vid': self.cp.get('program', 'vid'),
+                       'fdn_code': self.cp.get('program', 'fdn_code')}
 
-    def test_program_detail_success(self):
+    def test_video_rate_success(self):
         r = requests.get(self.url, params=self.params, headers=self.headers)
         result = r.json()
-        fdn_code = result['data']['fdn_code']
         # print r.url
-        # print('RESP:' + unicode(result))
+        print('RESP:' + unicode(result))
         self.assertEqual(result['code'], 0)
-        self.assertNotEqual(result['data'], {})
-        self.assertNotEqual(result['data']['title'], "")
-        self.assertNotEqual(fdn_code, "")
-        self.assertNotEqual(result['data']['ad']['adurl'], "")
-        self.assertNotEqual(result['data']['ad_mplus']['_AID_PLAYER_DETAIL'], {})
-
-        if fdn_code != "":
-            self.cp.set('program', 'fdn_code', value=fdn_code)
-            self.cp.write(open(self.file_path, 'w'))
+        self.assertNotEqual(result['data']['download'], [], msg='download rate exist')
+        self.assertNotEqual(result['data']['livestream'], [], msg='livestream rate exist')
 
 
 if __name__ == '__main__':
