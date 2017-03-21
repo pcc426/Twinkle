@@ -9,7 +9,7 @@ import json
 
 
 class LogoutTest(unittest.TestCase):
-    """ /user/logout interface test"""
+    """ /user/logout API test"""
 
     def setUp(self):
         # 在api_tests目录中执行.py时要改路径
@@ -29,14 +29,14 @@ class LogoutTest(unittest.TestCase):
         self.headers = {'Content-Type': "application/x-www-form-urlencoded"}
 
     def test_user_logout_success(self):
-        """ User Logout """
+        """ User Logout success"""
 
         dataload = {'token': self.token}
         r = requests.post(self.logout_url, data=dataload, headers=self.headers)
         result = r.json()
-        print unicode(result)
+        print("LOGOUT_RESP=" + unicode(result))
         self.assertEqual(result['code'], 0)    # 用户注销太快易失败?先将校验开启,后续可考虑延迟实现
-        # self.assertEqual(result['result']['token'], self.token)
+        self.assertEqual(result['result']['token'], self.token)
 
 
 if __name__ == '__main__':

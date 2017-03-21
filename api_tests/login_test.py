@@ -9,7 +9,7 @@ import json
 
 
 class LoginTest(unittest.TestCase):
-    """ /user/login interface tests """
+    """ /user/login API tests """
 
     def setUp(self):
         # 在api_tests目录中执行.py时要改路径
