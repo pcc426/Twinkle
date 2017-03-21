@@ -11,7 +11,7 @@ sys.path.append('./api_tests')
 
 
 test_dir = './api_tests'
-# discover = unittest.defaultTestLoader.discover(test_dir, pattern='login_test.py')
+# discover = unittest.defaultTestLoader.discover(test_dir, pattern='user_login_test.py')
 discover = unittest.defaultTestLoader.discover(test_dir, pattern='*_test.py')
 
 if __name__ == '__main__':
