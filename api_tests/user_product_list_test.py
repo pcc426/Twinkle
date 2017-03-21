@@ -7,7 +7,6 @@ import unittest
 import requests
 import os
 import ConfigParser
-import json
 
 
 class ProductlistTest(unittest.TestCase):
