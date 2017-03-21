@@ -10,9 +10,7 @@ import ConfigParser
 
 
 class UpgradeCheckTest(unittest.TestCase):
-    """
-    /upgrade/check API test
-    """
+    """/upgrade/check API test"""
 
     def setUp(self):
         base_dir = os.path.dirname(os.path.abspath("__file__"))
@@ -35,7 +33,7 @@ class UpgradeCheckTest(unittest.TestCase):
                         cp.get("ios", "version"), 'app': cp.get("ios", "app")}
         self.params = {'token': self.token}
 
-    def test_upgrade_check_success(self):
+    def test_upgrade_check_no_newer_version(self):
         r = requests.get(self.url, params=self.params, headers=self.headers)
         result = r.json()
         # print r.url
