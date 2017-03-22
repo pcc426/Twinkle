@@ -35,9 +35,7 @@ class LogoutTest(unittest.TestCase):
         r = requests.post(self.logout_url, data=dataload, headers=self.headers)
         result = r.json()
         print("LOGOUT_RESP=" + unicode(result))
-        self.assertEqual(result['code'], 0)    # 用户注销太快易失败?先将校验开启,后续可考虑延迟实现
-        self.assertEqual(result['result']['token'], self.token)
-
+        self.assertEqual(result['code'], 0)
 
 if __name__ == '__main__':
     unittest.main()
