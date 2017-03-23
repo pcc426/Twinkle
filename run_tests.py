@@ -17,11 +17,13 @@ discover = unittest.defaultTestLoader.discover(test_dir, pattern='*_test.py')
 if __name__ == '__main__':
     
     # 如果需要html格式输出测试报告,可用下面的html_runner
+    str_time = datetime.datetime.now().strftime('%m_%d_%Y')
+    dir_path = 'results/' + str_time + '/'
+    if os.path.isdir(dir_path)== False:
+        os.mkdir(dir_path)
     str_time = datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S')
-    os.mkdir('results/' + str_time + '/')
 
-    fp = file('results/' + str_time + '/api_test_report_' + str_time + '.html', 'wb')
-    # with open('results/' + str_time + '/api_test_report_' + str_time + '.html', 'wb') as fp:
+    fp = file(dir_path + '/api_test_report_' + str_time + '.html', 'wb')
     runner = HTMLTestRunner.HTMLTestRunner(
         stream=fp,
         title='Api_Test_Report',
